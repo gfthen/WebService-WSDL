@@ -14,15 +14,6 @@ import com.isp.it.pshs0.provider.JaxWebServiceProvider;
  */
 public abstract class BaseWebServiceAdapter {
 
-    @Value("${isp.otcv0.ws.amazon.url}")
-    private String endpoint;
-
-    @Value("com.isp.it.pshs0.AWSECommerceServicePortType")
-    private String serviceInterface;
-
-    @Value("com.isp.it.pshs0.AWSECommerceService")
-    private String serviceImplementation;
-
     @Value("${ws.request.TimeOut}")
     private String requestTimeOut;
 
@@ -30,7 +21,7 @@ public abstract class BaseWebServiceAdapter {
     private String responseTimeOut;
 
     @Bean
-    public JaxWebServiceProvider jaxWebServiceProvider() {
+    public JaxWebServiceProvider jaxWebServiceProvider(String endpoint, String serviceInterface, String serviceImplementation) {
 	JaxWebServiceProvider provider = new JaxWebServiceProvider();
 	provider.setEndPoint(endpoint);
 	provider.setServiceInterface(serviceInterface);
@@ -40,8 +31,8 @@ public abstract class BaseWebServiceAdapter {
 	return provider;
     }
 
-    public BindingProvider getBindingProvider() throws ClassNotFoundException, NoSuchMethodException {
-	return jaxWebServiceProvider().getWebServiceClient();
+    public BindingProvider getBindingProvider(String endpoint, String serviceInterface, String serviceImplementation) throws ClassNotFoundException, NoSuchMethodException {
+	return jaxWebServiceProvider(endpoint, serviceInterface, serviceImplementation).getWebServiceClient();
     }
 
 }

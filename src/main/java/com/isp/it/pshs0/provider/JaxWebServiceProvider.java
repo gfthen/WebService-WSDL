@@ -46,6 +46,7 @@ public class JaxWebServiceProvider implements InitializingBean {
 		Class<?> serviceClass = Class.forName(getServiceImplementation());
 		Constructor<?> baseConstructor = serviceClass.getConstructor(URL.class);
 		serviceProvider = (Service) baseConstructor.newInstance(url);
+
 		Class<?> serviceInterface = Class.forName(getServiceInterface());
 
 		// Check and eventually set the cache
@@ -63,7 +64,17 @@ public class JaxWebServiceProvider implements InitializingBean {
 	    return bindingProvider;
 	} catch (MalformedURLException e) {
 	    return null;
-	} catch (SecurityException | InstantiationException | IllegalArgumentException | InvocationTargetException | IllegalAccessException me) {
+	} catch (InstantiationException e) {
+
+	    return null;
+	} catch (IllegalAccessException e) {
+
+	    return null;
+	} catch (IllegalArgumentException e) {
+
+	    return null;
+	} catch (InvocationTargetException e) {
+
 	    return null;
 	}
 
